@@ -8,7 +8,7 @@
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import type { Area, Idioma, Questao } from "../lib/provas.ts";
+import { corrigirAreas, type Area, type Idioma, type Questao } from "../lib/provas.ts";
 
 const API = process.env.ENEM_API ?? "https://api.enem.dev/v1";
 const INTERVALO_MS = 1100; // a API limita a cerca de 1 pedido por segundo
@@ -103,6 +103,7 @@ async function baixarAno(ano: number, idiomas: string[]): Promise<Questao[]> {
       juntar(r.questions.filter((q) => q.language === idioma));
     }
   }
+  corrigirAreas([...porId.values()]);
   return [...porId.values()].sort((x, y) => x.numero - y.numero || (x.idioma ?? "").localeCompare(y.idioma ?? ""));
 }
 
@@ -117,7 +118,8 @@ let total = 0;
 for (const prova of anos) {
   const arquivo = path.join(pasta, `${prova.year}.json`);
   const anteriores = existsSync(arquivo) ? (JSON.parse(readFileSync(arquivo, "utf8")) as Questao[]) : [];
-  const tri = new Map(anteriores.map((q) => [q.id, { tri: q.tri, anulada: q.anulada }]));
+  // Preserva o que o importador gravou, inclusive a área corrigida pelos microdados.
+  const tri = new Map(anteriores.map((q) => [q.id, { tri: q.tri, anulada: q.anulada, area: q.area }]));
   const questoes = (await baixarAno(prova.year, (prova.languages ?? []).map((l) => l.value))).map((q) => ({ ...q, ...tri.get(q.id) }));
   writeFileSync(arquivo, JSON.stringify(questoes));
   total += questoes.length;

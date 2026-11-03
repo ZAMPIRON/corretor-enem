@@ -13,6 +13,8 @@ type Etapa = "montar" | "prova" | "resultado";
 
 export default function Simulado({ resumo }: { resumo: Resumo }) {
   const anosDisponiveis = resumo.anos.map((a) => a.ano);
+  const temTri = (ano: number) => (resumo.anos.find((a) => a.ano === ano)?.comTri ?? 0) > 0;
+  const semTri = anosDisponiveis.filter((ano) => !temTri(ano));
   const [modo, setModo] = useState<"sorteio" | "completa">("sorteio");
   const [areas, setAreas] = useState<Area[]>(["MT"]);
   const [anos, setAnos] = useState<number[]>([]);
@@ -59,12 +61,14 @@ export default function Simulado({ resumo }: { resumo: Resumo }) {
 
   async function finalizar() {
     setCarregando(true);
+    setErro("");
     try {
       const r = await fetch("/api/corrigir", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ids: questoes.map((q) => q.id), respostas }),
       });
+      if (!r.ok) throw new Error("Não foi possível corrigir agora. Tente de novo.");
       const res = (await r.json()) as Resultado;
       setResultado(res);
       setEtapa("resultado");
@@ -81,6 +85,8 @@ export default function Simulado({ resumo }: { resumo: Resumo }) {
         notas: res.areas.map((a) => ({ area: a.area, nota: a.nota })),
         exemplo: resumo.exemplo,
       });
+    } catch (e) {
+      setErro(e instanceof Error ? e.message : String(e));
     } finally {
       setCarregando(false);
     }
@@ -97,6 +103,7 @@ export default function Simulado({ resumo }: { resumo: Resumo }) {
         inicio={inicio}
         resultado={etapa === "resultado" ? resultado : null}
         carregando={carregando}
+        erro={erro}
         onFinalizar={finalizar}
         onNovo={() => setEtapa("montar")}
       />
@@ -140,15 +147,25 @@ export default function Simulado({ resumo }: { resumo: Resumo }) {
 
             <label>Anos <span className="suave">(nenhum marcado = todos)</span></label>
             <div className="linha">
-              {anosDisponiveis.map((ano) => (
-                <button key={ano} type="button" className={"chip" + (anos.includes(ano) ? " ativa" : "")} onClick={() => setAnos(alternar(anos, ano))}>{ano || "Exemplo"}</button>
-              ))}
+              {anosDisponiveis.map((ano) => {
+                const bloqueado = soComTri && !temTri(ano);
+                return (
+                  <button key={ano} type="button" disabled={bloqueado} title={bloqueado ? "Esta prova ainda não tem parâmetros TRI" : undefined}
+                    className={"chip" + (anos.includes(ano) ? " ativa" : "")} onClick={() => setAnos(alternar(anos, ano))}>{ano || "Exemplo"}</button>
+                );
+              })}
             </div>
 
             <label className="opcao" style={{ marginTop: 16 }}>
-              <input type="checkbox" checked={soComTri} disabled={resumo.comTri === 0} onChange={(e) => setSoComTri(e.target.checked)} />
+              <input type="checkbox" checked={soComTri} disabled={resumo.comTri === 0} onChange={(e) => {
+                setSoComTri(e.target.checked);
+                if (e.target.checked) setAnos(anos.filter(temTri));
+              }} />
               Só questões com parâmetros TRI (para ter nota TRI)
             </label>
+            {soComTri && semTri.length > 0 && (
+              <p className="suave">Ainda sem parâmetros TRI: {semTri.join(", ")}. Desmarque a opção acima para usar essas provas (aí o resultado mostra só os acertos).</p>
+            )}
           </>
         ) : (
           <>
@@ -202,11 +219,12 @@ interface PropsProva {
   inicio: number;
   resultado: Resultado | null;
   carregando: boolean;
+  erro: string;
   onFinalizar: () => void;
   onNovo: () => void;
 }
 
-function Prova({ questoes, respostas, setRespostas, atual, setAtual, inicio, resultado, carregando, onFinalizar, onNovo }: PropsProva) {
+function Prova({ questoes, respostas, setRespostas, atual, setAtual, inicio, resultado, carregando, erro, onFinalizar, onNovo }: PropsProva) {
   const [confirmando, setConfirmando] = useState(false);
   const q = questoes[atual];
   const correcao = resultado?.questoes.find((c) => c.id === q.id);
@@ -309,6 +327,7 @@ function Prova({ questoes, respostas, setRespostas, atual, setAtual, inicio, res
           )
         )}
       </div>
+      {erro && <p className="erro">{erro}</p>}
     </>
   );
 }

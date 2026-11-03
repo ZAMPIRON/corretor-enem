@@ -142,6 +142,7 @@ code { background: var(--borda); padding: 1px 5px; border-radius: 4px; }
   cursor: pointer;
 }
 .abas button.ativa, .chip.ativa { background: var(--destaque); color: var(--destaque-texto); border-color: var(--destaque); }
+.chip:disabled { opacity: 0.4; cursor: not-allowed; }
 .mapa { display: flex; flex-wrap: wrap; gap: 4px; margin: 16px 0; }
 .casa {
   width: 34px; height: 30px;

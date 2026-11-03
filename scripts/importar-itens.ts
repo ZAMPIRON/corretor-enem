@@ -11,7 +11,7 @@
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { AREAS, type Area, type Questao } from "../lib/provas.ts";
+import { AREAS, corrigirAreas, type Area, type Questao } from "../lib/provas.ts";
 
 interface ItemInep { posicao: number; gabarito: string; a: number; b: number; c: number; anulado: boolean; idioma: string | null }
 
@@ -35,7 +35,9 @@ function lerCsv(arquivo: string): Map<string, { area: Area; cor: string; itens: 
   const C = {
     posicao: col("CO_POSICAO"), area: col("SG_AREA"), gabarito: col("TX_GABARITO"),
     a: col("NU_PARAM_A"), b: col("NU_PARAM_B"), c: col("NU_PARAM_C"),
-    cor: col("TX_COR"), prova: col("CO_PROVA"), lingua: col("TP_LINGUA"), aban: col("IN_ITEM_ABAN"),
+    cor: col("TX_COR"), prova: col("CO_PROVA"), aban: col("IN_ITEM_ABAN"),
+    // 2009 não tem língua estrangeira, e o arquivo vem sem essa coluna.
+    lingua: cab.indexOf("TP_LINGUA"),
   };
   const num = (v: string) => Number(v.replace(",", "."));
   const cadernos = new Map<string, { area: Area; cor: string; itens: ItemInep[] }>();
@@ -50,6 +52,15 @@ function lerCsv(arquivo: string): Map<string, { area: Area; cor: string; itens: 
       idioma: v[C.lingua] === "0" ? "ingles" : v[C.lingua] === "1" ? "espanhol" : null,
     });
     cadernos.set(v[C.prova], caderno);
+  }
+  // Desde 2017 o INEP numera LC em 50 posições (1-5 inglês, 6-10 espanhol, depois 11-50), enquanto
+  // o enem.dev usa 1-5 para as duas línguas. Traz o espanhol e o resto da prova 5 posições para trás.
+  for (const { itens } of cadernos.values()) {
+    const ingles = itens.filter((i) => i.idioma === "ingles").map((i) => i.posicao);
+    const espanhol = itens.filter((i) => i.idioma === "espanhol").map((i) => i.posicao);
+    if (!ingles.length || !espanhol.length || Math.min(...espanhol) <= Math.max(...ingles)) continue;
+    const fim = Math.max(...espanhol);
+    for (const i of itens) if (i.idioma === "espanhol" || i.posicao > fim) i.posicao -= espanhol.length;
   }
   return cadernos;
 }
@@ -75,6 +86,29 @@ for (const arquivo of arquivos) {
   }
   const questoes = JSON.parse(readFileSync(destino, "utf8")) as Questao[];
   const cadernos = lerCsv(arquivo);
+  // Recalcula tudo do zero, para uma importação anterior errada não deixar restos.
+  for (const q of questoes) {
+    delete q.tri;
+    delete q.anulada;
+  }
+  // A área de cada bloco de 45 questões é a do caderno cujos gabaritos mais batem com o bloco.
+  // Não dá para usar o número direto: em alguns anos o INEP e o enem.dev numeram as áreas em ordens diferentes.
+  const areaDoNumero = new Map<number, Area>();
+  for (let bloco = 0; bloco < 4; bloco++) {
+    const doBloco = questoes.filter((q) => Math.floor((q.numero - 1) / 45) === bloco);
+    let melhor = { area: null as Area | null, acertos: 0 };
+    for (const cad of cadernos.values()) {
+      for (const d of DESLOCAMENTOS) {
+        const acertos = parear(doBloco, cad.itens, d).filter(([q, i]) => q.gabarito === i.gabarito).length;
+        if (acertos > melhor.acertos) melhor = { area: cad.area, acertos };
+      }
+    }
+    if (melhor.area && melhor.acertos >= doBloco.length * MINIMO_CONCORDANCIA) {
+      for (const q of doBloco) areaDoNumero.set(q.numero, melhor.area);
+    }
+  }
+  const corrigidas = corrigirAreas(questoes, areaDoNumero);
+  if (corrigidas) console.log(`${ano}: ${corrigidas} questões estavam com a área errada no enem.dev e foram corrigidas.`);
 
   for (const area of AREAS) {
     const doBanco = questoes.filter((q) => q.area === area);
