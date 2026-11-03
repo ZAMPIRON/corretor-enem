@@ -1,7 +1,9 @@
 // Histórico salvo só no navegador do aluno (sem custo de servidor).
 
+import type { Area } from "./provas.ts";
+
 export type Registro =
-  | { tipo: "simulado"; data: string; prova: string; acertos: number; total: number; nota: number; oficial: boolean }
+  | { tipo: "simulado"; data: string; prova: string; acertos: number; total: number; notas: { area: Area; nota: number | null }[]; exemplo: boolean }
   | { tipo: "redacao"; data: string; tema: string; total: number; competencias: number[] };
 
 const CHAVE = "corretor-enem:historico";

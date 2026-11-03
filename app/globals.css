@@ -131,3 +131,49 @@ label { display: block; font-weight: 600; margin: 12px 0 6px; }
 table { width: 100%; border-collapse: collapse; }
 td, th { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--borda); vertical-align: top; }
 .num-tab { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+code { background: var(--borda); padding: 1px 5px; border-radius: 4px; }
+.opcao { display: inline-flex; gap: 6px; align-items: center; font-weight: 400; margin: 4px 12px 4px 0; }
+.abas { display: flex; gap: 4px; margin-top: 16px; flex-wrap: wrap; }
+.abas button, .chip {
+  background: transparent;
+  border: 1px solid var(--borda);
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+.abas button.ativa, .chip.ativa { background: var(--destaque); color: var(--destaque-texto); border-color: var(--destaque); }
+.mapa { display: flex; flex-wrap: wrap; gap: 4px; margin: 16px 0; }
+.casa {
+  width: 34px; height: 30px;
+  border: 1px solid var(--borda); border-radius: 6px;
+  background: var(--cartao); cursor: pointer;
+  font-size: 0.8rem; font-variant-numeric: tabular-nums; padding: 0;
+}
+.casa.respondida { background: var(--borda); }
+.casa.certa { border-color: var(--certo); color: var(--certo); font-weight: 700; }
+.casa.errada { border-color: var(--errado); color: var(--errado); font-weight: 700; }
+.casa.anulada { opacity: 0.5; }
+.casa.atual { outline: 2px solid var(--destaque); outline-offset: 1px; }
+.texto-questao img, .alternativa img { max-width: 100%; height: auto; display: block; margin: 8px 0; }
+.texto-questao p { margin: 8px 0; }
+.texto-questao table { margin: 8px 0; }
+.enunciado { font-weight: 600; margin-top: 12px; }
+.alternativas { display: grid; gap: 8px; margin-top: 12px; }
+.alternativa {
+  display: flex; gap: 10px; align-items: flex-start; text-align: left;
+  background: transparent; border: 1px solid var(--borda); border-radius: 8px;
+  padding: 8px 12px; cursor: pointer;
+}
+.alternativa:disabled { cursor: default; }
+.alternativa .letra {
+  flex: 0 0 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--borda); display: grid; place-items: center; font-weight: 600;
+}
+.alternativa .texto-questao p { margin: 3px 0; }
+.alternativa.marcada { border-color: var(--destaque); }
+.alternativa.marcada .letra { background: var(--destaque); color: var(--destaque-texto); border-color: var(--destaque); }
+.alternativa.gabarito { border-color: var(--certo); border-width: 2px; }
+.alternativa.errada { border-color: var(--errado); border-width: 2px; }
+.certo { color: var(--certo); font-weight: 600; }
+.erro { font-weight: 600; }
+.notas { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }

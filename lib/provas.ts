@@ -1,29 +1,45 @@
-export type Area = "CN" | "CH" | "LC" | "MT";
+export type Area = "LC" | "CH" | "CN" | "MT";
+export type Idioma = "ingles" | "espanhol";
+
+export const AREAS: Area[] = ["LC", "CH", "CN", "MT"];
 
 export const NOME_AREA: Record<Area, string> = {
-  CN: "Ciências da Natureza",
-  CH: "Ciências Humanas",
   LC: "Linguagens e Códigos",
+  CH: "Ciências Humanas",
+  CN: "Ciências da Natureza",
   MT: "Matemática",
 };
 
-export interface ItemProva {
-  posicao: number;
-  gabarito: string; // "A".."E"
-  a: number;
-  b: number;
-  c: number;
-  anulado: boolean;
+export interface Alternativa {
+  letra: string; // "A".."E"
+  texto: string | null;
+  imagem: string | null;
 }
 
-export interface Prova {
-  id: string;
-  nome: string;
+export interface Questao {
+  id: string; // "<ano>-<numero>-<idioma ou pt>"
   ano: number;
+  numero: number;
   area: Area;
-  // false quando os parâmetros são fictícios (prova de exemplo)
-  oficial: boolean;
-  itens: ItemProva[];
+  idioma: Idioma | null; // só nas questões de língua estrangeira
+  contexto: string | null; // texto-base em Markdown, pode ter imagens
+  enunciado: string | null;
+  alternativas: Alternativa[];
+  gabarito: string;
+  // true quando falta imagem ou texto de alguma parte da questão
+  incompleta: boolean;
+  // Parâmetros TRI oficiais do INEP, quando já importados.
+  tri?: { a: number; b: number; c: number };
+  anulada?: boolean;
+  exemplo?: boolean;
+}
+
+// Versão enviada ao navegador durante a prova: sem gabarito nem parâmetros.
+export type QuestaoPublica = Omit<Questao, "gabarito" | "tri">;
+
+export function publica(q: Questao): QuestaoPublica {
+  const { gabarito: _g, tri: _t, ...resto } = q;
+  return resto;
 }
 
 // Conversão de theta para a escala do ENEM por área.
@@ -34,3 +50,6 @@ export const ESCALA: Record<Area, { media: number; desvio: number }> = {
   LC: { media: 500, desvio: 100 },
   MT: { media: 500, desvio: 100 },
 };
+
+// Mínimo de questões com parâmetros numa área para mostrar nota TRI.
+export const MINIMO_TRI = 5;

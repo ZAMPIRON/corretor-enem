@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { lerHistorico, limparHistorico, type Registro } from "@/lib/historico.ts";
+import { NOME_AREA } from "@/lib/provas.ts";
 
 export default function PaginaHistorico() {
   const [registros, setRegistros] = useState<Registro[]>([]);
@@ -26,10 +27,14 @@ export default function PaginaHistorico() {
                     <td>{new Date(r.data).toLocaleDateString("pt-BR")}</td>
                     <td>
                       {r.tipo === "simulado"
-                        ? <>{r.prova}<div className="suave">{r.acertos} de {r.total} acertos{r.oficial ? "" : ", prova de exemplo"}</div></>
+                        ? <>{r.prova}<div className="suave">{r.acertos} de {r.total} acertos{r.exemplo ? ", questões de exemplo" : ""}</div></>
                         : <>Redação: {r.tema}<div className="suave">Competências: {r.competencias.join(", ")}</div></>}
                     </td>
-                    <td className="num-tab"><strong>{r.tipo === "simulado" ? r.nota : r.total}</strong></td>
+                    <td className="num-tab">
+                      {r.tipo === "simulado"
+                        ? (r.notas ?? []).map((n) => <div key={n.area}>{NOME_AREA[n.area]}: <strong>{n.nota ?? "sem TRI"}</strong></div>)
+                        : <strong>{r.total}</strong>}
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <header>
           <nav>
             <Link href="/">Corretor ENEM</Link>
-            <Link href="/simulado">Simulado TRI</Link>
+            <Link href="/simulado">Simulados</Link>
             <Link href="/redacao">Redação</Link>
             <Link href="/historico">Histórico</Link>
           </nav>

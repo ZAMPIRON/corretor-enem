@@ -1,12 +1,13 @@
-import { carregarProvas } from "@/lib/carregar-provas.ts";
+import { resumo } from "@/lib/banco.ts";
 import Simulado from "./simulado.tsx";
+
+export const dynamic = "force-dynamic";
 
 export default function PaginaSimulado() {
   return (
     <>
-      <h1>Simulado com nota TRI</h1>
-      <p className="suave">Escolha a prova, marque o que você respondeu e calcule a nota.</p>
-      <Simulado provas={carregarProvas()} />
+      <h1>Simulado</h1>
+      <Simulado resumo={resumo()} />
     </>
   );
 }

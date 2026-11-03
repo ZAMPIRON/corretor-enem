@@ -6,8 +6,8 @@ export default function Inicio() {
       <h1>Descubra sua nota no modelo do ENEM</h1>
       <p className="suave">Faça um simulado com questões de provas anteriores e veja sua nota calculada por TRI, ou envie sua redação para uma correção nas 5 competências.</p>
       <div className="cartao">
-        <h2>Simulado com nota TRI</h2>
-        <p>Marque suas respostas de uma prova do ENEM e veja a nota estimada pela Teoria de Resposta ao Item, a mesma usada pelo INEP. Acertar questões fáceis pesa mais do que acertar só as difíceis.</p>
+        <h2>Simulados com nota TRI</h2>
+        <p>Monte simulados com questões reais de todas as provas do ENEM, escolhendo áreas, anos e quantidade, ou refaça a prova completa de um ano. No fim, veja a nota estimada pela Teoria de Resposta ao Item, a mesma usada pelo INEP, e revise cada questão.</p>
         <Link className="botao" href="/simulado">Fazer simulado</Link>
       </div>
       <div className="cartao">
