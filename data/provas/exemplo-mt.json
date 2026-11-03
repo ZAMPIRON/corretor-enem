@@ -1,0 +1,369 @@
+{
+ "id": "exemplo-mt",
+ "nome": "Exemplo de Matemática (parâmetros fictícios)",
+ "ano": 0,
+ "area": "MT",
+ "oficial": false,
+ "itens": [
+  {
+   "posicao": 136,
+   "gabarito": "C",
+   "a": 3.37,
+   "b": 0.882,
+   "c": 0.107,
+   "anulado": false
+  },
+  {
+   "posicao": 137,
+   "gabarito": "E",
+   "a": 1.235,
+   "b": 1.54,
+   "c": 0.236,
+   "anulado": false
+  },
+  {
+   "posicao": 138,
+   "gabarito": "B",
+   "a": 1.094,
+   "b": 1.018,
+   "c": 0.11,
+   "anulado": false
+  },
+  {
+   "posicao": 139,
+   "gabarito": "A",
+   "a": 2.378,
+   "b": -0.293,
+   "c": 0.185,
+   "anulado": false
+  },
+  {
+   "posicao": 140,
+   "gabarito": "B",
+   "a": 2.577,
+   "b": 1.54,
+   "c": 0.109,
+   "anulado": false
+  },
+  {
+   "posicao": 141,
+   "gabarito": "E",
+   "a": 1.992,
+   "b": 2.917,
+   "c": 0.107,
+   "anulado": false
+  },
+  {
+   "posicao": 142,
+   "gabarito": "B",
+   "a": 1.724,
+   "b": 0.005,
+   "c": 0.118,
+   "anulado": false
+  },
+  {
+   "posicao": 143,
+   "gabarito": "C",
+   "a": 2.401,
+   "b": 1.887,
+   "c": 0.115,
+   "anulado": false
+  },
+  {
+   "posicao": 144,
+   "gabarito": "E",
+   "a": 2.597,
+   "b": 0.803,
+   "c": 0.182,
+   "anulado": false
+  },
+  {
+   "posicao": 145,
+   "gabarito": "A",
+   "a": 2.411,
+   "b": 1.667,
+   "c": 0.174,
+   "anulado": false
+  },
+  {
+   "posicao": 146,
+   "gabarito": "E",
+   "a": 2.069,
+   "b": 0.6,
+   "c": 0.188,
+   "anulado": false
+  },
+  {
+   "posicao": 147,
+   "gabarito": "D",
+   "a": 1.904,
+   "b": 0.369,
+   "c": 0.127,
+   "anulado": false
+  },
+  {
+   "posicao": 148,
+   "gabarito": "B",
+   "a": 1.205,
+   "b": 0.551,
+   "c": 0.174,
+   "anulado": false
+  },
+  {
+   "posicao": 149,
+   "gabarito": "C",
+   "a": 2.824,
+   "b": 0.508,
+   "c": 0.247,
+   "anulado": false
+  },
+  {
+   "posicao": 150,
+   "gabarito": "A",
+   "a": 2.28,
+   "b": 0.077,
+   "c": 0.151,
+   "anulado": false
+  },
+  {
+   "posicao": 151,
+   "gabarito": "D",
+   "a": 2.054,
+   "b": 2.867,
+   "c": 0.112,
+   "anulado": false
+  },
+  {
+   "posicao": 152,
+   "gabarito": "E",
+   "a": 2.433,
+   "b": 2.564,
+   "c": 0.147,
+   "anulado": false
+  },
+  {
+   "posicao": 153,
+   "gabarito": "C",
+   "a": 2.486,
+   "b": 1.53,
+   "c": 0.168,
+   "anulado": false
+  },
+  {
+   "posicao": 154,
+   "gabarito": "A",
+   "a": 3.362,
+   "b": 1.159,
+   "c": 0.2,
+   "anulado": false
+  },
+  {
+   "posicao": 155,
+   "gabarito": "A",
+   "a": 2.828,
+   "b": 0.584,
+   "c": 0.187,
+   "anulado": false
+  },
+  {
+   "posicao": 156,
+   "gabarito": "D",
+   "a": 1.711,
+   "b": 0.85,
+   "c": 0.2,
+   "anulado": false
+  },
+  {
+   "posicao": 157,
+   "gabarito": "A",
+   "a": 3.352,
+   "b": 0.744,
+   "c": 0.192,
+   "anulado": false
+  },
+  {
+   "posicao": 158,
+   "gabarito": "D",
+   "a": 1.147,
+   "b": 2.189,
+   "c": 0.119,
+   "anulado": false
+  },
+  {
+   "posicao": 159,
+   "gabarito": "B",
+   "a": 1.995,
+   "b": 2.709,
+   "c": 0.174,
+   "anulado": false
+  },
+  {
+   "posicao": 160,
+   "gabarito": "B",
+   "a": 2.123,
+   "b": 1.423,
+   "c": 0.233,
+   "anulado": false
+  },
+  {
+   "posicao": 161,
+   "gabarito": "D",
+   "a": 3.16,
+   "b": 0.474,
+   "c": 0.162,
+   "anulado": false
+  },
+  {
+   "posicao": 162,
+   "gabarito": "C",
+   "a": 2.707,
+   "b": 0.832,
+   "c": 0.135,
+   "anulado": false
+  },
+  {
+   "posicao": 163,
+   "gabarito": "A",
+   "a": 1.441,
+   "b": 0.312,
+   "c": 0.135,
+   "anulado": false
+  },
+  {
+   "posicao": 164,
+   "gabarito": "D",
+   "a": 3.078,
+   "b": 0.138,
+   "c": 0.142,
+   "anulado": false
+  },
+  {
+   "posicao": 165,
+   "gabarito": "B",
+   "a": 2.047,
+   "b": 0.792,
+   "c": 0.185,
+   "anulado": false
+  },
+  {
+   "posicao": 166,
+   "gabarito": "B",
+   "a": 2.726,
+   "b": 1.304,
+   "c": 0.193,
+   "anulado": false
+  },
+  {
+   "posicao": 167,
+   "gabarito": "A",
+   "a": 2.142,
+   "b": 2.548,
+   "c": 0.243,
+   "anulado": false
+  },
+  {
+   "posicao": 168,
+   "gabarito": "E",
+   "a": 1.981,
+   "b": 0.896,
+   "c": 0.116,
+   "anulado": false
+  },
+  {
+   "posicao": 169,
+   "gabarito": "D",
+   "a": 1.156,
+   "b": -0.264,
+   "c": 0.131,
+   "anulado": false
+  },
+  {
+   "posicao": 170,
+   "gabarito": "B",
+   "a": 1.275,
+   "b": 1.603,
+   "c": 0.115,
+   "anulado": false
+  },
+  {
+   "posicao": 171,
+   "gabarito": "E",
+   "a": 1.378,
+   "b": -0.145,
+   "c": 0.155,
+   "anulado": false
+  },
+  {
+   "posicao": 172,
+   "gabarito": "A",
+   "a": 1.176,
+   "b": 0.228,
+   "c": 0.156,
+   "anulado": false
+  },
+  {
+   "posicao": 173,
+   "gabarito": "C",
+   "a": 3.389,
+   "b": 1.608,
+   "c": 0.171,
+   "anulado": false
+  },
+  {
+   "posicao": 174,
+   "gabarito": "A",
+   "a": 3.122,
+   "b": 2.976,
+   "c": 0.17,
+   "anulado": false
+  },
+  {
+   "posicao": 175,
+   "gabarito": "D",
+   "a": 1.78,
+   "b": 0.004,
+   "c": 0.212,
+   "anulado": false
+  },
+  {
+   "posicao": 176,
+   "gabarito": "C",
+   "a": 2.197,
+   "b": 1.922,
+   "c": 0.177,
+   "anulado": false
+  },
+  {
+   "posicao": 177,
+   "gabarito": "B",
+   "a": 3.377,
+   "b": 1.349,
+   "c": 0.122,
+   "anulado": false
+  },
+  {
+   "posicao": 178,
+   "gabarito": "E",
+   "a": 3.285,
+   "b": 2.154,
+   "c": 0.145,
+   "anulado": false
+  },
+  {
+   "posicao": 179,
+   "gabarito": "A",
+   "a": 2.74,
+   "b": 0.414,
+   "c": 0.155,
+   "anulado": false
+  },
+  {
+   "posicao": 180,
+   "gabarito": "B",
+   "a": 1.889,
+   "b": 0.28,
+   "c": 0.181,
+   "anulado": false
+  }
+ ]
+}
